@@ -48,6 +48,14 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Startup setup and environment
+gem "dotenv-rails"
+gem "foreman"
+
+# Make it easier for people using the API by setting CORS headers
+# CORS for API
+gem "rack-cors"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -62,6 +70,21 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # Rspec for rails 7.x
+  gem 'rspec-rails', '~> 6.0.0'
+
+  # rspec simplecov
+  gem 'simplecov', require: false
+
+  # Help with code quality
+  gem 'brakeman', require: false
+    # rubocop
+  # Ruby code style checker (linter) and formatter based on the community-driven
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-performance', require: false
 end
 
 group :test do
@@ -69,4 +92,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+
+  # Rspec for rails 7.x
+  gem 'rspec-rails', '~> 6.0.0'
 end
