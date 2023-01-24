@@ -1,0 +1,86 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'config/application.rb'
+    - 'Gemfile*'
+    - 'app/views/**/*.jbuilder'
+    - 'bin/*'
+  NewCops: disable
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+RSpec/DescribedClass:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  Max: 10
+  Exclude:
+    - 'app/lib/*'
+
+Metrics/PerceivedComplexity:
+  Enabled: true
+  Max: 10
+  Exclude:
+    - 'app/lib/*'
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+Lint/UselessMethodDefinition:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Layout/TrailingWhitespace:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
