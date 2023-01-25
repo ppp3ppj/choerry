@@ -16,6 +16,9 @@ Rails.application.routes.draw do
         get 'me', to: 'sessions#me'
         post 'users/confirm', to: 'sessions#confirm'
       end
+        get 'projects', to: 'projects#index'
+        post 'projects', to: 'projects#create'
+        post 'user_projects', to: 'user_projects#create'
     end
   end
 end
