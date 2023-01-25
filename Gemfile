@@ -56,6 +56,12 @@ gem "foreman"
 # CORS for API
 gem "rack-cors"
 
+# login
+gem 'devise'
+
+# jwt
+gem 'jwt'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -76,6 +82,10 @@ group :development do
 
   # rspec simplecov
   gem 'simplecov', require: false
+
+  # Preview email
+  # Preview email 
+  gem "letter_opener"
 
   # Help with code quality
   gem 'brakeman', require: false
