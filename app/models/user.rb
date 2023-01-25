@@ -7,6 +7,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  has_many :user_projects, dependent: :destroy
+  has_many :projects, through: :user_projects
+
   before_validation :generate_auth_token, on: [:create]
   before_validation :downcase_title, on: %i[create update]
 
