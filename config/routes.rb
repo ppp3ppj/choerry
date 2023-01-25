@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-   namespace :api do
+  namespace :api do
     namespace :v1 do
       namespace :user do
         post 'sign_up', to: 'sessions#sign_up'

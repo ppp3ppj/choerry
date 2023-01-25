@@ -1,4 +1,4 @@
 example_id                      | status  | run_time        |
 ------------------------------- | ------- | --------------- |
-./spec/example_spec.rb[1:1:1]   | passed  | 0.01882 seconds |
-./spec/models/user_spec.rb[1:1] | pending | 0.00002 seconds |
+./spec/example_spec.rb[1:1:1]   | passed  | 0.01174 seconds |
+./spec/models/user_spec.rb[1:1] | pending | 0.00001 seconds |
