@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,12 +10,15 @@ class User < ApplicationRecord
   before_validation :generate_auth_token, on: [:create]
   before_validation :downcase_title, on: %i[create update]
 
+  after_create :assign_default_role
+  validate :must_have_a_role, on: :update
+
   validates :first_name, presence: true
   # validates :last_name, presence: true
   validates :email, presence: true, format: { with: /.+@[^@]+\.[^*]{2,}\S/, message: 'Email invalid' }, uniqueness: { case_sensitive: false }
   validates :title, inclusion: { in: %w[mr ms mrs], message: 'is not a valid title' }
 
-  validate :check_full_name_length, on: %i[create update]
+  # validate :check_full_name_length, on: %i[create update]
   before_validation :convert_lowercase_email, on: %i[create update]
   
   def generate_auth_token(force = false) 
@@ -32,12 +36,12 @@ class User < ApplicationRecord
     self.title = title&.downcase
   end
 
-  def check_full_name_length
-    return unless (first_name + last_name).length < 20
-
-    errors.add(:full_name, 'is to short')
-    
-  end
+  # def check_full_name_length
+  #   return unless (first_name + last_name).length < 10
+  #
+  #   errors.add(:full_name, 'is to short')
+  #   
+  # end
 
   def convert_lowercase_email
     self.email = email.downcase if email.present?
@@ -45,5 +49,18 @@ class User < ApplicationRecord
 
   def full_name
     [first_name, last_name].compact.join(' ')
+  end
+
+  private
+
+  def must_have_a_role
+    return if roles.any?
+
+    errors.add(:roles, 'must have at least 1 role')
+    
+  end
+
+  def assign_default_role
+    add_role(:user) if roles.blank?
   end
 end
