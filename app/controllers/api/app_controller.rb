@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::AppController < ApplicationController
+  
   rescue_from PPPAuthenticationError, with: :rescue_unauthorized
   rescue_from JWT::DecodeError, with: :rescue_unauthorized
   rescue_from JWT::ExpiredSignature, with: :rescue_unauthorized
@@ -12,7 +13,9 @@ class Api::AppController < ApplicationController
 
   def set_current_user_from_jwt
     auth_header = request.headers['Authorization']
-    raise PPPAuthenticationError, 'No token' if auth_header.blank?
+    return nil if auth_header.blank?
+
+    # raise PPPAuthenticationError, 'No token' if auth_header.blank?
 
     bearer = auth_header.split.first
     raise PPPAuthenticationError, 'Bad format' if bearer != 'Bearer'
@@ -27,6 +30,25 @@ class Api::AppController < ApplicationController
 
     @current_user = User.find_by(auth_token: payload['auth_token'])
     raise PPPAuthenticationError, 'Bad token' if @current_user.blank?
+  end
+
+  def signed_in?
+    Rails.logger.debug '*****************8'
+    Rails.logger.debug @current_user
+    @current_user.present?
+  end
+
+  def authenticate_user!(_options = {})
+    render_unauthorized unless signed_in?
+  end
+
+  def render_unauthorized
+    error = { errors: { 'not authenticated': ['require user to sign in'] } }
+    render_error(error, :unauthorized)
+  end
+
+  def render_error(error, status)
+    render json: error, status:
   end
 
   private 
